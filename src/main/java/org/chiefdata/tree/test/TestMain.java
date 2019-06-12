@@ -17,5 +17,8 @@ public class TestMain {
         BinSortTree<Integer> sortTree = new BinSortTree<Integer>();
         sortTree.insert(new ArrayList<Integer>(){{add(62); add(88); add(58); add(47); add(35); add(73); add(51); add(99); add(37); add(93);}});
         System.out.println(sortTree.sortDisplay());
+//        System.out.println(sortTree.testFindMostLeftNode().data);
+        sortTree.delete(93);
+        System.out.println(sortTree.sortDisplay());
     }
 }
