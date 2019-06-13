@@ -97,7 +97,38 @@ public class BinSortTree<T> {
         return searchNode(data, map);
     }
 
+    /**
+     * 对排序二叉树 进行插入
+     * @return 插入成功的节点个数
+     */
+    public int insert(T data){
+        if (null == data){
+            return 0;
+        }
 
+        if (null == root){
+            root = new TreeNode<T>(data);
+            return 1;
+        }
+
+        Map<String, Object> resultMap = searchNode(data);
+        if (true == (Boolean)resultMap.get("isFind")){
+            //找到了 - 不做插入
+            System.out.println("已经存在元素了,不用做插入");
+        }
+
+        TreeNode<T> pNode = (TreeNode<T>)resultMap.get("parentNode");
+        int pHashCode = pNode.data.hashCode();
+        int nodeHashCode = data.hashCode();
+        TreeNode<T> node = new TreeNode<T>(data);
+        if(pHashCode > nodeHashCode){
+            pNode.left = node;
+        }else {
+            pNode.right = node;
+        }
+
+        return 1;
+    }
 
     /**
      * 对排序二叉树 进行插入

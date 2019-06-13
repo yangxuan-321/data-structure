@@ -7,7 +7,7 @@ package org.chiefdata.tree.binart_avl_tree.node;
  * @Description: TODO
  * @date 2019/6/12 17:55
  */
-class Entry<K, V>{
+public class Entry<K, V>{
     public K key;
     private int hashCode;
     public V value;
