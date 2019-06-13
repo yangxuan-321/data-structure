@@ -11,5 +11,6 @@ package org.chiefdata.tree.binart_sort_tree;
 public enum SonNodeTypeEnum {
     UNKNOW,         //未知
     LEFT_SON,       //左儿子
-    RIGHT_SON;      //右儿子
+    RIGHT_SON,      //右儿子
+    ROOT;           //根节点
 }
