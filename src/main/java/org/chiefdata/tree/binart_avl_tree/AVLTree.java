@@ -105,6 +105,7 @@ public class AVLTree<K, V> {
 
 
     //https://www.cnblogs.com/zhuwbox/p/3636783.html
+    //https://blog.csdn.net/liushengxi_root/article/details/81660375
     //判断插入类型
     public RotateTypeEnum rotateType(){
         return RotateTypeEnum.LL;
