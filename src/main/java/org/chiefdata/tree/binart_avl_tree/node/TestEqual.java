@@ -1,4 +1,4 @@
-package org.chiefdata.datastructure.tree.avl.node;
+package org.chiefdata.tree.binart_avl_tree.node;
 
 import java.util.HashMap;
 import java.util.Map;

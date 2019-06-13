@@ -1,4 +1,4 @@
-package org.chiefdata.datastructure.tree.avl.util;
+package org.chiefdata.util;
 
 import java.security.MessageDigest;
 
@@ -15,12 +15,13 @@ public class MD5Utils {
     static {
         try {
             MessageDigest MD = MessageDigest.getInstance("MD5");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     public String MD5Encode(String origin) {
         byte[] digest = MD.digest(origin.getBytes());
+        return null;
     }
 }
