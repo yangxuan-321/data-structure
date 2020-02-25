@@ -97,7 +97,38 @@ public class BinSortTree<T> {
         return searchNode(data, map);
     }
 
+    /**
+     * 对排序二叉树 进行插入
+     * @return 插入成功的节点个数
+     */
+    public int insert(T data){
+        if (null == data){
+            return 0;
+        }
 
+        if (null == root){
+            root = new TreeNode<T>(data);
+            return 1;
+        }
+
+        Map<String, Object> resultMap = searchNode(data);
+        if (true == (Boolean)resultMap.get("isFind")){
+            //找到了 - 不做插入
+            System.out.println("已经存在元素了,不用做插入");
+        }
+
+        TreeNode<T> pNode = (TreeNode<T>)resultMap.get("parentNode");
+        int pHashCode = pNode.data.hashCode();
+        int nodeHashCode = data.hashCode();
+        TreeNode<T> node = new TreeNode<T>(data);
+        if(pHashCode > nodeHashCode){
+            pNode.left = node;
+        }else {
+            pNode.right = node;
+        }
+
+        return 1;
+    }
 
     /**
      * 对排序二叉树 进行插入
@@ -237,6 +268,9 @@ public class BinSortTree<T> {
             case RIGHT_SON:
                 parentNode.right = null;
                 break;
+            case ROOT:
+                this.root = null;
+                break;
             default:
                 break;
         }
@@ -255,6 +289,9 @@ public class BinSortTree<T> {
                 break;
             case RIGHT_SON:
                 parentNode.right = currNode.left;
+                break;
+            case ROOT:
+                root = currNode.left;
                 break;
             default:
                 break;
@@ -275,6 +312,9 @@ public class BinSortTree<T> {
             case RIGHT_SON:
                 parentNode.right = currNode.right;
                 break;
+            case ROOT:
+                root = currNode.right;
+                break;
             default:
                 break;
         }
@@ -288,18 +328,12 @@ public class BinSortTree<T> {
      */
     private void delLeftAndRightNode(TreeNode<T> parentNode, TreeNode<T> currNode, SonNodeTypeEnum sonNodeType){
         //拿当前节点最右的左子树
-        Map<String, Object> resultMap = findMostLeftNode_(currNode.right);
+//        Map<String, Object> resultMap = findMostLeftNode_(currNode);
+        Map<String, Object> resultMap = findNodeRightSonMonstLeftNode(currNode);
         TreeNode<T> mostLeftNode = (TreeNode<T>) resultMap.get("mostLeftNode");
         TreeNode<T> mostLeftNodeParent = (TreeNode<T>) resultMap.get("parentNode");
-        switch (sonNodeType){
-            case LEFT_SON:
-                parentNode.left = mostLeftNode;
-                break;
-            case RIGHT_SON:
-                parentNode.right = mostLeftNode;
-                break;
-            default:
-                break;
+        if (!(sonNodeType == SonNodeTypeEnum.LEFT_SON || sonNodeType == SonNodeTypeEnum.RIGHT_SON || sonNodeType == SonNodeTypeEnum.ROOT)){
+            return;
         }
 
         switch (sonNodeType(mostLeftNodeParent, mostLeftNode)){
@@ -308,6 +342,23 @@ public class BinSortTree<T> {
                 break;
             case RIGHT_SON:
                 mostLeftNodeParent.right = null;
+                break;
+            default:
+                break;
+        }
+
+        mostLeftNode.left = currNode.left;
+        mostLeftNode.right = currNode.right;
+
+        switch (sonNodeType){
+            case LEFT_SON:
+                parentNode.left = mostLeftNode;
+                break;
+            case RIGHT_SON:
+                parentNode.right = mostLeftNode;
+                break;
+            case ROOT:
+                root = mostLeftNode;
                 break;
             default:
                 break;
@@ -321,12 +372,19 @@ public class BinSortTree<T> {
      * @return
      */
     private SonNodeTypeEnum sonNodeType(TreeNode<T> parentNode, TreeNode<T> currNode){
+
+        if (null == parentNode){
+            return SonNodeTypeEnum.ROOT;
+        }
+
         int hashCode = currNode.hashCode();
-        if (parentNode.left.hashCode() == hashCode){
+        if (null != parentNode.left && parentNode.left.hashCode() == hashCode){
+            System.out.println("left");
             return SonNodeTypeEnum.LEFT_SON;
         }
 
-        if (parentNode.right.hashCode() == hashCode){
+        if (null != parentNode.right && parentNode.right.hashCode() == hashCode){
+            System.out.println("right");
             return SonNodeTypeEnum.RIGHT_SON;
         }
 
@@ -345,11 +403,19 @@ public class BinSortTree<T> {
         return findMostLeftNode(node, map);
     }
 
+    private Map<String, Object> findNodeRightSonMonstLeftNode(TreeNode<T> node){
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("parentNode", node);
+        map.put("mostLeftNode", node.right);
+        findMostLeftNode(node.right, map);
+        return map;
+    }
+
     private Map<String, Object> findMostLeftNode_(TreeNode<T> node){
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("parentNode", node);
         map.put("mostLeftNode", node);
-        findMostLeftNode(node.left, map);
+        findMostLeftNode(node, map);
         return map;
     }
 

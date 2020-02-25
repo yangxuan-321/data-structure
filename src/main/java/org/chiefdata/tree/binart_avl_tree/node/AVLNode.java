@@ -13,6 +13,7 @@ public class AVLNode<K, V> {
     public AVLNode<K, V> right;
     //高度
     public int height;
+
     public AVLNode(K key, V value){
         this.data = new Entry<K, V>(key, value);
         this.height = 1;
