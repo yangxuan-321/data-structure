@@ -2,9 +2,6 @@ package org.chiefdata.array;
 
 import com.google.common.base.Joiner;
 
-import java.util.Arrays;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -48,7 +45,7 @@ public class Array<T> {
 
     public void add(int index, T e){
         if (size == getCapacity()){
-            defaultAddCapacity();
+            resize(2 * data.length);
         }
 
         if (index > size){
@@ -64,8 +61,14 @@ public class Array<T> {
         size ++;
     }
 
-    private void defaultAddCapacity(){
-        data = java.util.Arrays.copyOf(data, getCapacity() * 2);
+    // 将数组空间的容量变成newCapacity大小
+    private void resize(int newCapacity){
+
+        T[] newData = (T[])new Object[newCapacity];
+        for(int i = 0 ; i < size ; i ++){
+            newData[i] = data[i];
+        }
+        data = newData;
     }
 
     public T get(int index){
@@ -94,6 +97,10 @@ public class Array<T> {
         }
 
         data[index] = null;
+
+        if(size == data.length / 4 && size /2 != 0){
+            resize(data.length / 2);
+        }
 
         size --;
 
