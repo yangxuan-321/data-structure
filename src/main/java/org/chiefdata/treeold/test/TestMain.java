@@ -1,6 +1,6 @@
-package org.chiefdata.tree.test;
+package org.chiefdata.treeold.test;
 
-import org.chiefdata.tree.binart_sort_tree.BinSortTree;
+import org.chiefdata.treeold.binart_sort_tree.BinSortTree;
 
 import java.util.ArrayList;
 

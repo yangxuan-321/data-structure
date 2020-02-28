@@ -1,4 +1,4 @@
-package org.chiefdata.tree.binart_sort_tree;
+package org.chiefdata.treeold.binart_sort_tree;
 
 import org.chiefdata.util.CollectionUtils;
 

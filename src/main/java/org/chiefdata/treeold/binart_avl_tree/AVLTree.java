@@ -1,7 +1,7 @@
-package org.chiefdata.tree.binart_avl_tree;
+package org.chiefdata.treeold.binart_avl_tree;
 
-import org.chiefdata.tree.binart_avl_tree.enums.RotateTypeEnum;
-import org.chiefdata.tree.binart_avl_tree.node.AVLNode;
+import org.chiefdata.treeold.binart_avl_tree.enums.RotateTypeEnum;
+import org.chiefdata.treeold.binart_avl_tree.node.AVLNode;
 
 import java.util.HashMap;
 import java.util.Map;
