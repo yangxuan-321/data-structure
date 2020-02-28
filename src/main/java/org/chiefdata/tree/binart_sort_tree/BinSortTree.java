@@ -174,23 +174,23 @@ public class BinSortTree<T> {
 
     public List<T> sortDisplay(){
         ArrayList<T> ts = new ArrayList<T>();
-        sortisplay(root, ts);
+        sortDisplay(root, ts);
         return ts;
     }
 
-    private void sortisplay(TreeNode<T> node, List<T> ts){
+    private void sortDisplay(TreeNode<T> node, List<T> ts){
         if (null == node){
             return;
         }
 
         if(null != node.left){
-            sortisplay(node.left, ts);
+            sortDisplay(node.left, ts);
         }
 
         ts.add(node.data);
 
         if(null != node.right){
-            sortisplay(node.right, ts);
+            sortDisplay(node.right, ts);
         }
 
     }

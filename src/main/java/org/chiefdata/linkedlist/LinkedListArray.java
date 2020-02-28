@@ -10,7 +10,7 @@ package org.chiefdata.linkedlist;
  */
 public class LinkedListArray<E> {
 
-
+    private int head;
 
     private class Node<E>{
         // 数据域
