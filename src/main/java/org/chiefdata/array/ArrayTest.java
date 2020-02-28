@@ -18,12 +18,12 @@ public class ArrayTest {
             array.add(i);
         }
 
-        array.remove(9);
+        array.remove();
 
-        System.out.println(array);
-
-        Integer integer = array.find((i) -> i.intValue() == 3);
-        System.out.println(integer);
+//        System.out.println(array);
+//
+//        Integer integer = array.find((i) -> i.intValue() == 3);
+        System.out.println(array.toString());
     }
 
     public void timeDesc(){

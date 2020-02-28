@@ -75,6 +75,10 @@ public class Array<T> {
         return data[index];
     }
 
+    public T get(){
+        return get(size -1);
+    }
+
     public T set(int index, T e){
         if (index > size){
             throw new RuntimeException("当前数组容量为:" + getSize() + ", index 必须小于 容量");
@@ -96,7 +100,7 @@ public class Array<T> {
             data[i] = data[i + 1];
         }
 
-        data[index] = null;
+        data[size - 1] = null;
 
         if(size == data.length / 4 && size /2 != 0){
             resize(data.length / 2);
@@ -105,6 +109,10 @@ public class Array<T> {
         size --;
 
         return old;
+    }
+
+    public T remove(){
+        return remove(size - 1);
     }
 
     public T find(Predicate<T> equalsFunc){
