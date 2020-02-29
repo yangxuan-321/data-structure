@@ -15,6 +15,8 @@ public class TreeNode<T> {
     public TreeNode<T> left;
     //右孩子 -- 引用
     public TreeNode<T> right;
+    //如果多个
+    public TreeNode<T> head;
 
     public TreeNode() {
     }
