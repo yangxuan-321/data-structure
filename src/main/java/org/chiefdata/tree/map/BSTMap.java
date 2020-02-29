@@ -3,6 +3,10 @@ package org.chiefdata.tree.map;
 import org.chiefdata.tree.node.KVNode;
 
 import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * @author : Kevin
@@ -182,6 +186,7 @@ public class BSTMap<K, V> implements Map<K, V> {
      */
     public void preQuery(){
         preQuery(root);
+        System.out.println();
     }
 
     private void preQuery(KVNode<K,V> node) {
@@ -190,7 +195,7 @@ public class BSTMap<K, V> implements Map<K, V> {
         }
 
         // 前序遍历 就代表 访问节点在前
-        System.out.println(node.value);
+        System.out.print(node.value + "->");
         preQuery(node.left);
         preQuery(node.right);
     }
@@ -200,6 +205,7 @@ public class BSTMap<K, V> implements Map<K, V> {
      */
     public void middleQuery(){
         middleQuery(root);
+        System.out.println();
     }
 
     private void middleQuery(KVNode<K, V> node) {
@@ -208,7 +214,7 @@ public class BSTMap<K, V> implements Map<K, V> {
         }
 
         middleQuery(node.left);
-        System.out.println(node.value);
+        System.out.print(node.value + "->");
         middleQuery(node.right);
     }
 
@@ -217,6 +223,7 @@ public class BSTMap<K, V> implements Map<K, V> {
      */
     public void afterQuery(){
         afterQuery(root);
+        System.out.println();
     }
 
     private void afterQuery(KVNode<K, V> node) {
@@ -226,6 +233,48 @@ public class BSTMap<K, V> implements Map<K, V> {
 
         afterQuery(node.left);
         afterQuery(node.right);
-        System.out.println(node.value);
+        System.out.print(node.value + "->");
+    }
+
+    /**
+     * 前序遍历无递归写法
+     * 需要使用数据结构 - 栈
+     */
+    public void preQueryNoneDigui(){
+        Stack<KVNode<K, V>> stack = new Stack<KVNode<K, V>>();
+        stack.push(root);
+        while (!stack.isEmpty()){
+            KVNode<K, V> pop = stack.pop();
+
+            System.out.print(pop.value + "->");
+
+            if (pop.right != null){
+                stack.push(pop.right);
+            }
+            if (pop.left != null){
+                stack.push(pop.left);
+            }
+        }
+        System.out.println();
+    }
+
+    /**
+     * 层序遍历
+     */
+    public void leverQuery(){
+        Queue<KVNode<K, V>> queue = new LinkedList<KVNode<K, V>>();
+        queue.add(root);
+        while (!queue.isEmpty()){
+            KVNode<K, V> curr = queue.poll();
+            System.out.print(curr.value + "->");
+            if (curr.left != null){
+                queue.add(curr.left);
+            }
+            if (curr.right != null){
+                queue.add(curr.right);
+            }
+        }
+
+        System.out.println();
     }
 }
