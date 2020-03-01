@@ -1,5 +1,6 @@
 package org.chiefdata.tree.bst;
 
+import org.checkerframework.checker.units.qual.K;
 import org.chiefdata.tree.node.Node;
 
 import java.util.Comparator;
@@ -74,8 +75,72 @@ public class BST<E> {
         return node;
     }
 
-    public E remove(E e) {
-        return null;
+    public void remove(E e) {
+        root = remove(root, e);
+    }
+
+    private Node<E> remove(Node<E> node, E e) {
+        if (node == null){
+            return null;
+        }
+
+        int compare = comparator.compare(node.data, e);
+        if (0 == compare){
+            // 找到该节点了
+            if (node.left == null){//如果左子树为空,让该节点的右孩子来顶替
+                Node<E> rightNode = node.right;
+                node.right = null;  // 这句话 要不要 都行。
+                size--;
+                return rightNode;
+            }
+
+            if (node.right == null){//如果右子树为空,让该节点的左孩子来顶替
+                Node<E> leftNode = node.left;
+                node.left = null;
+                size--;
+                return leftNode;
+            }
+
+//            if (node.left != null && node.right != null){//左右子树皆不为空,找到右孩子中最小的节点来顶替
+                // 找到顶替节点
+            Node<E> dingti = minimum(node.right);   //找到右孩子中最小值
+            dingti.right = removeMin(node.right);   //删除右孩子的最小值,这里面会做size--动作
+//                dingti.right = node.right;
+            dingti.left = node.left;
+
+            node.left = node.right = null; //可以不要这一句
+
+            return dingti;
+//            }
+
+
+        }else if (compare < 0){
+            node.right = remove(node.right, e);
+            return node;
+        }else {
+            node.left = remove(node.left, e);
+            return node;
+        }
+    }
+
+    private Node<E> removeMin(Node<E> node) {
+        if(node.left == null){
+            Node<E> rightNode = node.right;
+            node.right = null;
+            size --;
+            return rightNode;
+        }
+
+        node.left = removeMin(node.left);
+        return node;
+    }
+
+    private Node<E> minimum(Node<E> node) {
+        if (node.left == null){
+            return node;
+        }
+
+        return minimum(node.left);
     }
 
     public boolean contains(E e) {
