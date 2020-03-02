@@ -125,7 +125,7 @@ public class MaxHeap<E> {
             }
             // 将最大的孩子和当前元素进行比较
             int compare = comparator.compare(data.get(k), data.get(maxEleIndex));
-            if (compare > 0){// 如果 当前比最大子节点大 则停止下沉
+            if (compare >= 0){// 如果 当前比最大子节点大 则停止下沉 相等也下沉。毕竟在实现优先队列时候 同一优先级的 先到先得
                 break;
             }
             // 如果 当前比最大子节点小 则交换
@@ -133,5 +133,12 @@ public class MaxHeap<E> {
             // 然后索引 变成父亲节点的索引
             k = maxEleIndex;
         }
+    }
+
+    public E seeMax(){
+        if (getSize() == 0){
+            throw new RuntimeException("空的");
+        }
+        return data.get(0);
     }
 }
