@@ -1,4 +1,4 @@
-package org.chiefdata.tree.map;
+package org.chiefdata.map;
 
 public interface Map<K, V> {
 

@@ -1,6 +1,6 @@
-package org.chiefdata.tree.map;
+package org.chiefdata.map;
 
-import org.chiefdata.tree.bst.BST;
+import java.util.Comparator;
 
 /**
  * @author : Kevin
@@ -12,7 +12,8 @@ import org.chiefdata.tree.bst.BST;
  */
 public class BSTMapTest {
     public static void main(String[] args) {
-        BSTMap<Integer, String> map = new BSTMap<Integer, String>();
+        Comparator<Integer> comparator = (e1, e2)->{return e1.intValue() - e2.intValue();};
+        BSTMap<Integer, String> map = new BSTMap<Integer, String>(comparator);
 //        map.add(5, "5");
 //        map.add(3, "3");
 //        map.add(6, "6");

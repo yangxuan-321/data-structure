@@ -1,4 +1,4 @@
-package org.chiefdata.tree.set;
+package org.chiefdata.set;
 
 /**
  * @author : Kevin
@@ -20,7 +20,7 @@ public interface Set<E> {
      * @param e
      * @return
      */
-    public E remove(E e);
+    public void remove(E e);
 
     /**
      * 是否存在

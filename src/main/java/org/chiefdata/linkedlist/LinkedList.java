@@ -1,5 +1,7 @@
 package org.chiefdata.linkedlist;
 
+import java.util.Comparator;
+
 /**
  * @author : Kevin
  * @Title : LinkedList
@@ -11,8 +13,22 @@ package org.chiefdata.linkedlist;
 public class LinkedList<E> {
     private Node<E> head;
     private int size;
+    private Comparator<E> comparator;
 
     public LinkedList(){
+        this.comparator = (e1, e2)->{
+            if (e1 instanceof Comparable){
+                return ((Comparable) e1).compareTo(e2);
+            }else {
+                return e1.hashCode() - e2.hashCode();
+            }
+        };
+        this.head = null;
+        this.size = 0;
+    }
+
+    public LinkedList(Comparator<E> comparator){
+        this.comparator = comparator;
         this.head = null;
         this.size = 0;
     }
@@ -102,6 +118,40 @@ public class LinkedList<E> {
         }
 
         return str;
+    }
+
+    public void remove(E e){
+        head = remove(head, e);
+    }
+
+    public Node<E> remove(Node<E> node, E e){
+        if (node == null){
+            return null;
+        }
+
+        node.next = remove(node.next, e);
+        if (0 == comparator.compare(node.data, e)){
+            return node.next;
+        }else {
+            return node;
+        }
+    }
+
+    public boolean contains(E e) {
+        return contains(head, e);
+    }
+
+    public boolean contains(Node<E> node, E e){
+        if (node == null){
+            return false;
+        }
+
+        int compare = comparator.compare(node.data, e);
+        if (compare == 0){
+            return true;
+        }else{
+            return contains(node.next, e);
+        }
     }
 
     private class Node<E>{

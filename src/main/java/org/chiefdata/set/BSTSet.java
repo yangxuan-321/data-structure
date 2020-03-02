@@ -1,4 +1,4 @@
-package org.chiefdata.tree.set;
+package org.chiefdata.set;
 
 import org.chiefdata.tree.bst.BST;
 
@@ -24,8 +24,8 @@ public class BSTSet<E> implements Set<E> {
     }
 
     @Override
-    public E remove(E e) {
-        return bst.remove(e);
+    public void remove(E e) {
+        bst.remove(e);
     }
 
     @Override

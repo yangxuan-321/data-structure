@@ -25,7 +25,13 @@ public class BST<E> {
         root = null;
         size = 0;
         // 默认使用hashCode作比较
-        this.comparator = (e1, e2)->e1.hashCode()-e2.hashCode();
+        this.comparator = this.comparator = (e1, e2)->{
+            if (e1 instanceof Comparable){
+                return ((Comparable) e1).compareTo(e2);
+            }else {
+                return e1.hashCode() - e2.hashCode();
+            }
+        };
     }
 
     /**

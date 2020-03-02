@@ -23,14 +23,14 @@ public class Q349 {
         nums2[0] = 10000;
         nums2[1] = 1000000;
 
-        int[] intersection = new Solution().intersection(nums1, nums2);
+        int[] intersection = new Solution1().intersection(nums1, nums2);
         for (int i = 0; i < intersection.length; i++) {
             System.out.print(intersection[i] + "->");
         }
     }
 }
 
-class Solution{
+class Solution1{
     public int[] intersection(int[] nums1, int[] nums2){
         TreeSet<Integer> set = new TreeSet<Integer>();
         for (Integer num: nums1) {

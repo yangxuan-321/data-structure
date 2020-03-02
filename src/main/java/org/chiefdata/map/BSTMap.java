@@ -1,4 +1,4 @@
-package org.chiefdata.tree.map;
+package org.chiefdata.map;
 
 import org.chiefdata.tree.node.KVNode;
 
@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * @author : Kevin
@@ -25,7 +24,13 @@ public class BSTMap<K, V> implements Map<K, V> {
     public BSTMap(){
         this.root = null;
         this.size = 0;
-        this.comparator = (e1, e2)->e1.hashCode() - e2.hashCode();
+        this.comparator = this.comparator = (e1, e2)->{
+            if (e1 instanceof Comparable){
+                return ((Comparable) e1).compareTo(e2);
+            }else {
+                return e1.hashCode() - e2.hashCode();
+            }
+        };
     }
 
     public BSTMap(Comparator<K> comparator){
@@ -143,7 +148,8 @@ public class BSTMap<K, V> implements Map<K, V> {
 
     @Override
     public V get(K key) {
-        return getNode(root, key).value;
+        KVNode<K, V> node = getNode(root, key);
+        return null == node ? null : node.value;
     }
 
     private KVNode<K, V> getNode(KVNode<K, V> node, K key){

@@ -131,6 +131,16 @@ public class Array<T> {
         return data[index];
     }
 
+    public void swap(int index1, int index2){
+        if (index1 < 0 || index1 >= size || index2 < 0 || index2 >= size ){
+            return;
+        }
+
+        T tmp = data[index1];
+        data[index1] = data[index2];
+        data[index2] = tmp;
+    }
+
     @Override
     public String toString() {
         return Joiner.on(",").skipNulls().join(data);
