@@ -12,9 +12,11 @@ import java.util.Random;
  */
 public class TestUnionFind {
     public static void main(String[] args) {
-        System.out.println("uf3: " + testUnionFind(new UnionFind3(1000000), 1000000));
-        System.out.println("uf2: " + testUnionFind(new UnionFind2(1000000), 1000000));
-        System.out.println("uf1: " + testUnionFind(new UnionFind1(1000000), 1000000));
+        System.out.println("uf5: " + testUnionFind(new UnionFind5(10000000), 10000000));
+        System.out.println("uf4: " + testUnionFind(new UnionFind4(10000000), 10000000));
+        System.out.println("uf3: " + testUnionFind(new UnionFind3(10000000), 10000000));
+//        System.out.println("uf2: " + testUnionFind(new UnionFind2(10000000), 10000000));
+//        System.out.println("uf1: " + testUnionFind(new UnionFind1(1000000), 100000));
     }
 
     private static double testUnionFind(UnionFind uf, int m){

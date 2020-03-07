@@ -4,20 +4,18 @@ package org.chiefdata.tree.unionfind;
  * @author : Kevin
  * @Title : QuickUnion
  * @ProjectName data-structure
- * @Description : 相较于 union find3 的实现 。unind find3 是通过 比较 两个节点 分别为 根的情况下。节点个数大小 来决定 怎么 合并。
- * 但是 节点个数大小 并不代表 以 该元素为根的 树的 深度大小。
- * 所以 union find4 是 通过 深度优化的
+ * @Description : 路径压缩
  * @Time : Created in 2020/3/7 10:26
  * @Modifyed By :
  */
-public class UnionFind4 implements UnionFind {
+public class UnionFind5 implements UnionFind {
 
     private int[] parent;
     // sz[i] 表示 以 i 为根的集合中元素个数
     private int[] nodeTreeRank;
 
 
-    public UnionFind4(int size){
+    public UnionFind5(int size){
         parent = new int[size];
         nodeTreeRank = new int[size];
 
@@ -79,6 +77,9 @@ public class UnionFind4 implements UnionFind {
 
         // 如果节点 指向了 自己 就说明找到了 集合 的 分组 标号
         while(p != parent[p]){
+            // 路径 压缩 。
+            // 让父亲 变为 父亲的父亲
+            parent[p] = parent[parent[p]];
             p = parent[p];
         }
 
