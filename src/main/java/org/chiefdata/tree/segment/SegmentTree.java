@@ -141,6 +141,52 @@ public class SegmentTree<E> {
         }
     }
 
+    /**
+     * 将 index 位置的 元素 进行更新
+     * @param index
+     * @param e
+     */
+    public void set(int index, E e){
+        if (index < 0 || index > data.length){
+            throw new IllegalArgumentException("index异常");
+        }
+
+        data[index] = e;
+        set(0, 0, data.length - 1, index, e);
+    }
+
+    /**
+     * 在以 treeIndex 为根的线段树中 更新index 的值 为 e。[l, r]区间 表示要到 [l, r]区间去寻找 看 是否有index
+     * @param i
+     * @param l
+     * @param r
+     * @param index
+     * @param e
+     */
+    private void set(int treeIndex, int l, int r, int index, E e) {
+        // 边界情况
+        if (l == r){
+            data[treeIndex] = e;
+            return;
+        }
+
+        int mid = l + (r -l)/2;
+        int leftTreeIndex = leftChild(treeIndex);
+        int rightTreeIndex = rightChild(treeIndex);
+        if (index >= mid + 1){
+            set(rightTreeIndex, mid + 1, r, index, e);
+        }else {// index < mid
+            set(leftTreeIndex, l, mid, index, e);
+        }
+
+        // 重新做融合
+        tree[treeIndex] = mergeFunc.apply(tree[leftTreeIndex], tree[rightTreeIndex]);
+    }
+
+    // 批量更新 - 懒惰更新/懒惰传播
+    // 当访问的下一层为 叶子节点时候。 就不要急着更新 用一个lazy数组来存储 需要更新的叶子节点的内容。
+    // 当真正再有一次更新或者一次查询的时候，再去做更新(将lazy未更新的内容进行更新)。
+
     @Override
     public String toString() {
         return Joiner.on(",").skipNulls().join(tree);
