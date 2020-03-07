@@ -113,16 +113,21 @@ public class AVLTree<K, V>{
             node.left = add(node.left, key, value);
         }
 
+        // 维护平衡性
+        return balanceTheTree(node);
+    }
+
+    public KVNode<K, V> balanceTheTree(KVNode<K, V> node){
         // 对当前 node 的height 值 进行更新
         node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
 
         // 判断是否平衡
         int balanceFactor = getBalanceFactor(node);
         /**
-            if (Math.abs(balanceFactor) > 1){
-                System.out.println("该节点出现了不平衡, 平衡因子为:" + balanceFactor);
-            }
-        */
+         if (Math.abs(balanceFactor) > 1){
+         System.out.println("该节点出现了不平衡, 平衡因子为:" + balanceFactor);
+         }
+         */
 
         // 维护平衡性
         // LL
@@ -233,6 +238,8 @@ public class AVLTree<K, V>{
             return null;
         }
 
+        // 暂存 已经 完成删除操作的 此时的 子树的根节点
+        KVNode<K, V> retNode = null;
         int compare = comparator.compare(node.key, key);
         if (0 == compare){
             // 需要被删除
@@ -241,36 +248,39 @@ public class AVLTree<K, V>{
                 KVNode rightNode = node.right;
                 node.right = null;
                 size --;
-                return rightNode;
-            }
-
-            // 待删除节点右子树为空的情况
-            if(node.right == null){
+                retNode = rightNode;
+            }else if(node.right == null){// 待删除节点右子树为空的情况
                 KVNode leftNode = node.left;
                 node.left = null;
                 size --;
-                return leftNode;
+                retNode = leftNode;
+            }else{
+                // 待删除节点左右子树均不为空的情况
+
+                // 找到比待删除节点大的最小节点, 即待删除节点右子树的最小节点
+                // 用这个节点顶替待删除节点的位置
+                KVNode<K, V> successor = minimum(node.right);
+                successor.right = remove(node.right, successor.key);
+                successor.left = node.left;
+
+                node.left = node.right = null;
+
+                retNode = successor;
             }
-
-            // 待删除节点左右子树均不为空的情况
-
-            // 找到比待删除节点大的最小节点, 即待删除节点右子树的最小节点
-            // 用这个节点顶替待删除节点的位置
-            KVNode successor = minimum(node.right);
-            successor.right = removeMin(node.right);
-            successor.left = node.left;
-
-            node.left = node.right = null;
-
-            return successor;
-
         }else if (compare < 0){
             node.right = remove(node.right, key);
-            return node;
+            retNode = node;
         }else {
             node.left = remove(node.left, key);
-            return node;
+            retNode = node;
         }
+
+        if (retNode == null){
+            return null;
+        }
+
+        // 维护平衡性
+        return balanceTheTree(retNode);
     }
 
     // 返回以node为根的二分搜索树的最小值所在的节点
